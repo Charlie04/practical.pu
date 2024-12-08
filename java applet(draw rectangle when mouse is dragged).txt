@@ -1,0 +1,26 @@
+import java.applet.Applet;
+import java.awt.*;
+import java.awt.event.*;
+
+public class DrawRectangleApplet extends Applet implements MouseMotionListener {
+    int startX, startY, endX, endY;
+
+    public void init() {
+        addMouseMotionListener(this);
+    }
+
+    public void paint(Graphics g) {
+        g.drawRect(Math.min(startX, endX), Math.min(startY, endY),
+                   Math.abs(endX - startX), Math.abs(endY - startY));
+    }
+
+    public void mouseDragged(MouseEvent e) {
+        endX = e.getX();
+        endY = e.getY();
+        repaint();
+    }
+
+    public void mouseMoved(MouseEvent e) {
+        // Not used
+    }
+}
