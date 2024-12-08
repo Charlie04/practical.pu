@@ -1,0 +1,38 @@
+import java.applet.Applet;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+
+public class WriteToFileApplet extends Applet {
+    TextArea textArea;
+    TextField fileNameField;
+    Button saveButton;
+
+    public void init() {
+        textArea = new TextArea(10, 30);
+        fileNameField = new TextField(20);
+        saveButton = new Button("Save to File");
+
+        add(new Label("File Name:"));
+        add(fileNameField);
+        add(saveButton);
+        add(textArea);
+
+        saveButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                saveToFile();
+            }
+        });
+    }
+
+    private void saveToFile() {
+        String fileName = fileNameField.getText();
+        String content = textArea.getText();
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+            writer.write(content);
+            showStatus("File saved successfully.");
+        } catch (IOException e) {
+            showStatus("Error saving file: " + e.getMessage());
+        }
+    }
+}
